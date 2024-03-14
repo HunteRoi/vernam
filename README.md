@@ -1,4 +1,6 @@
-# Frequency Analysis
+# SDA 2023-2024
+MASI course asset "Sécurité des Applications".
+Topic on frequency analysis.
 
 ## Getting started
 
@@ -16,3 +18,22 @@ You can visualize them by running the CLI with the following command :
 ```bash
 $ python vernam.py -h
 ```
+
+Several commands are available, with their batch of options. **Please carefully read the docs before using.**
+
+### Encrypt
+
+The used command to validate the encryption feature is `python vernam.py encrypt --in ./resources/input/plain.txt --out ./resources/output/cipher.txt --key mykey`.
+
+### Decrypt
+
+The used command to validate the decryption feature is `python vernam.py decrypt --in ./resources/input/cipher.txt --out ./resources/output/plain.txt --key mykey`.
+
+### Attack
+
+The used command to validate the attack feature is `python vernam.py attack --in ./resources/input/attack_cipher.txt --out ./resources/output/attack_plain.txt`.
+
+## Contributors
+
+[etu45363 - ARTS Loïck](https://gitlab.com/ArtsLoick45363)
+[etu33784 - DEVRESSE Tinaël](https://gitlab.com/hunteroi)
