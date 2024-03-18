@@ -1,5 +1,8 @@
 """Module providing the feature to decrypt text."""
 
-def decrypt():
+from src.vernam_cipher import vernam_cipher
+
+
+def decrypt(ciphertext: bytes, key: str) -> str:
     """Decrypt text."""
-    print("Decrypt text.")
+    return vernam_cipher(ciphertext, key).decode()

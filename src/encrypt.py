@@ -1,5 +1,8 @@
 """Module providing the feature to encrypt text."""
 
-def encrypt():
+from src.vernam_cipher import vernam_cipher
+
+
+def encrypt(plaintext: str, key: str) -> bytes:
     """Encrypt text."""
-    print("Encrypt text.")
+    return vernam_cipher(plaintext, key)

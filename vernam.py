@@ -2,8 +2,9 @@
 
 import sys
 import click
+from click import File
 
-from src.preprocess import sanitize
+from src.preprocess import sanitize_to_alpha
 from src.encrypt import encrypt
 from src.decrypt import decrypt
 from src.attack import attack
@@ -17,12 +18,12 @@ def cli():
 @cli.command('encrypt')
 @click.option(
     '--in', 'input_file',
-    type=click.File('r'), default=sys.stdin, required=True,
+    type=File('r'), default=sys.stdin, required=True,
     help='Input file path. Use - to read from stdin. [default: stdin]'
 )
 @click.option(
     '--out', 'output_file',
-    type=click.File('w'), default=sys.stdout, required=True,
+    type=File('wb'), default=sys.stdout, required=True,
     help='Output file path. Use - to output on stdout. [default: stdout]'
 )
 @click.option(
@@ -30,19 +31,20 @@ def cli():
     type=str, default=None, required=True,
     help='Key to use for encryption/decryption.'
 )
-def encrypt_command(input_file, output_file, key):
+def encrypt_command(input_file: File, output_file: File, key: str):
     """Encrypt text."""
-    encrypt()
+    input_text = input_file.read()
+    output_file.write(encrypt(sanitize_to_alpha(input_text), key))
 
 @cli.command('decrypt')
 @click.option(
     '--in', 'input_file',
-    type=click.File('r'), default=sys.stdin, required=True,
+    type=File('rb'), default=sys.stdin, required=True,
     help='Input file path. Use - to read from stdin. [default: stdin]'
 )
 @click.option(
     '--out', 'output_file',
-    type=click.File('w'), default=sys.stdout, required=True,
+    type=File('w'), default=sys.stdout, required=True,
     help='Output file path. Use - to output on stdout. [default: stdout]'
 )
 @click.option(
@@ -50,22 +52,23 @@ def encrypt_command(input_file, output_file, key):
     type=str, default=None, required=True,
     help='Key to use for encryption/decryption.'
 )
-def decrypt_command(input_file, output_file, key):
+def decrypt_command(input_file: File, output_file: File, key: str):
     """Decrypt text."""
-    decrypt()
+    cipher_text = input_file.read()
+    output_file.write(decrypt(cipher_text, key))
 
 @cli.command('attack')
 @click.option(
     '--in', 'input_file',
-    type=click.File('r'), default=sys.stdin, required=True,
+    type=File('r'), default=sys.stdin, required=True,
     help='Input file path. Use - to read from stdin. [default: stdin]'
 )
 @click.option(
     '--out', 'output_file',
-    type=click.File('w'), default=sys.stdout, required=True,
+    type=File('w'), default=sys.stdout, required=True,
     help='Output file path. Use - to output on stdout. [default: stdout]'
 )
-def attack_command(input_file, output_file):
+def attack_command(input_file: File, output_file: File):
     """Attack text."""
     attack()
 
