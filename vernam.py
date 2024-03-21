@@ -3,10 +3,10 @@
 import sys
 import click
 
-from src.preprocess import sanitize
-from src.encrypt import encrypt
-from src.decrypt import decrypt
-from src.attack import attack
+from src.application.preprocess import sanitize_to_alpha
+from src.application.commands.encrypt import encrypt
+from src.application.commands.decrypt import decrypt
+from src.application.commands.attack import attack
 
 @click.group()
 def cli():
@@ -22,7 +22,7 @@ def cli():
 )
 @click.option(
     '--out', 'output_file',
-    type=click.File('w'), default=sys.stdout, required=True,
+    type=click.File('wb'), default=sys.stdout, required=True,
     help='Output file path. Use - to output on stdout. [default: stdout]'
 )
 @click.option(
@@ -30,14 +30,15 @@ def cli():
     type=str, default=None, required=True,
     help='Key to use for encryption/decryption.'
 )
-def encrypt_command(input_file, output_file, key):
+def encrypt_command(input_file: click.File, output_file: click.File, key: str):
     """Encrypt text."""
-    encrypt()
+    input_text = input_file.read()
+    output_file.write(encrypt(sanitize_to_alpha(input_text), key))
 
 @cli.command('decrypt')
 @click.option(
     '--in', 'input_file',
-    type=click.File('r'), default=sys.stdin, required=True,
+    type=click.File('rb'), default=sys.stdin, required=True,
     help='Input file path. Use - to read from stdin. [default: stdin]'
 )
 @click.option(
@@ -50,9 +51,10 @@ def encrypt_command(input_file, output_file, key):
     type=str, default=None, required=True,
     help='Key to use for encryption/decryption.'
 )
-def decrypt_command(input_file, output_file, key):
+def decrypt_command(input_file: click.File, output_file: click.File, key: str):
     """Decrypt text."""
-    decrypt()
+    cipher_text = input_file.read()
+    output_file.write(decrypt(cipher_text, key))
 
 @cli.command('attack')
 @click.option(
@@ -65,7 +67,7 @@ def decrypt_command(input_file, output_file, key):
     type=click.File('w'), default=sys.stdout, required=True,
     help='Output file path. Use - to output on stdout. [default: stdout]'
 )
-def attack_command(input_file, output_file):
+def attack_command(input_file: click.File, output_file: click.File):
     """Attack text."""
     attack()
 
