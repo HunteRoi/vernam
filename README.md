@@ -21,6 +21,9 @@ $ python vernam.py -h
 
 Several commands are available, with their batch of options. **Please carefully read the docs before using.**
 
+⚠️ In regard to the instructions of this exercise, a slight difference is to be noted. The parameters `--encrypt` and `--decrypt` are __not__ parameters in this version of the program.
+Wich means you should use them with the `--` !
+
 ### Encrypt
 
 The used command to validate the encryption feature is `python vernam.py encrypt --in ./resources/input/plain.txt --out ./resources/output/cipher.txt --key mykey`.
