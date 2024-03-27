@@ -22,4 +22,4 @@ def sanitize_to_alpha(text):
     alphabetic character.
     All remaining non-alphabetic characters are removed.
     """
-    return re.sub(r'[^a-z]', '', remove_diacritics(text).lower())
+    return re.sub(r"[^a-z]", "", remove_diacritics(text).lower())

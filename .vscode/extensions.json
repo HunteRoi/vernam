@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "ms-python.black-formatter",
+        "peterschmalfeldt.explorer-exclude",
+        "github.copilot",
+        "github.copilot-chat",
+        "ldez.ignore-files",
+        "adrianwilczynski.toggle-hidden",
+        "ms-python.vscode-pylance",
+        "ms-python.python",
+        "ms-python.debugpy"
+    ]
+    
+}
